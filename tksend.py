@@ -31,8 +31,21 @@ def main(args):
     record = rfactory.create(header, **test_data)
 
     print(common.jsonpretty(record))
-    
 
+    nodes = [
+        tkcore.KafkaNode('10.142.0.86'),
+        tkcore.KafkaNode('10.142.0.87'),
+        tkcore.KafkaNode('10.142.0.88')
+    ]
+
+    connect_string = ','.join([str(n) for n in nodes])
+    print(connect_string)
+    kclient = KafkaClient(hosts=connect_string)
+    print(kclient.topics)
+
+
+    #kcluster = tkcore.KafkaCluster()
+    
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)

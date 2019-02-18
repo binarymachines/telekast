@@ -36,38 +36,16 @@ class PipelineRecordFactory(object):
         return record
 
 
-
-
-class IngestRecordBuilder(object):
-    def __init__(self, record_header, **kwargs):
-        self.header = record_header
-        self.source_data = kwargs or {}
-
-
-    def add_field(self, name, value):
-        self.source_data[name] = value
-        return self
-
-
-    def add_fields(self, **kwargs):
-        self.source_data.update(kwargs)
-        return self
-
-
-    def build(self):
-        result = {}
-        result['header'] = self.header.data()
-        result['body'] = self.source_data
-        return result
-
-
-
 class KafkaNode(object):
     def __init__(self, host, port=9092):
         self._host = host
         self._port = port
 
-    def __call__(self):
+    @property
+    def address(self):
+        return '%s:%s' % (self._host, self._port)
+
+    def __str__(self):
         return '%s:%s' % (self._host, self._port)
 
 
