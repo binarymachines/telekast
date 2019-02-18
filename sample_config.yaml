@@ -1,0 +1,18 @@
+
+globals:
+  logfile:
+
+
+service_objects:
+
+
+pipelines:
+  test:
+    record_format: json
+    settings:
+    record_header_fields:
+      - ingest_timestamp
+      - pipeline_name
+      - record_type
+    record_payload_field: data
+    
