@@ -21,20 +21,6 @@ def default_json_serializer(message, partition_key):
 
 def main(args):
     print(common.jsonpretty(args))
-
-    # construct header for ingest records
-    hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'timestamp', 'record_type')
-    header = hfactory.create(pipeline_name='test',
-                             timestamp=datetime.datetime.now().isoformat(),
-                             record_type='test_record')
-
-    # construct record to be ingested
-    rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
-    test_data = {'message': 'Hello World from telekast!'}
-    record = rfactory.create(header, **test_data)
-
-    print(common.jsonpretty(record))
-
     nodes = [
         tkcore.KafkaNode('10.142.0.86'),
         tkcore.KafkaNode('10.142.0.87'),
@@ -46,16 +32,17 @@ def main(args):
     print(kclient.topics)
 
     topic_name = args['<topic>'].encode()
-    
-    
     if not topic_name in kclient.topics.keys():
         print('No topic "%s" listed.' % topic_name)
         return
 
     topic = kclient.topics[topic_name]
 
+    hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'timestamp', 'record_type')
+    rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
+
     msg_count = 100
-    with topic.get_sync_producer(serializer=default_json_serializer) as producer:
+    with topic.get_producer(serializer=default_json_serializer) as producer:
         for i in range(msg_count):
             header = hfactory.create(pipeline_name='test',
                                      timestamp=datetime.datetime.now().isoformat(),
