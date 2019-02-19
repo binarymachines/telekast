@@ -45,9 +45,10 @@ def main(args):
     msg_count = 100000
     time_log = jrnl.TimeLog()
 
-    with jrnl.stopwatch('ingest_records', time_log):
-        with topic.get_producer(use_rdkafka=True,
-                                serializer=default_json_serializer) as producer:
+    
+    with topic.get_producer(use_rdkafka=True,
+                            serializer=default_json_serializer) as producer:
+        with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
                                         timestamp=datetime.datetime.now().isoformat(),
