@@ -47,7 +47,7 @@ def main(args):
     topic_name = args['<topic>']
     
     if not topic_name in kclient.topics.keys():
-        print('No topic "%s" listed.' % topic)
+        print('No topic "%s" listed.' % topic_name)
         return
 
     topic = kclient.topics[topic_name]
