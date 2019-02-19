@@ -50,14 +50,16 @@ def main(args):
         print('No topic "%s" listed.' % topic)
         return
 
+    msg_count = 100
     with topic.get_sync_producer(serializer=default_json_serializer) as producer:
-        for i in range(100):
+        for i in range(msg_count):
             header = hfactory.create(pipeline_name='test',
                                      timestamp=datetime.datetime.now().isoformat(),
                                      record_type='test_record')
             record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
             producer.produce(record)
 
+    print('%d messages sent to Kafka topic %s.' % (msg_count, target_topic))
 
     
 
