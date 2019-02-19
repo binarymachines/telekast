@@ -10,6 +10,7 @@ import os, sys
 import json
 import datetime
 from snap import common
+from mercury import journaling as jrnl
 import docopt
 from telekast import core as tkcore
 from pykafka import KafkaClient
@@ -42,16 +43,20 @@ def main(args):
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
 
     msg_count = 100
-    with topic.get_producer(serializer=default_json_serializer) as producer:
-        for i in range(msg_count):
-            header = hfactory.create(pipeline_name='test',
-                                     timestamp=datetime.datetime.now().isoformat(),
-                                     record_type='test_record')
-            record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
-            producer.produce(record)
+    time_log = jrnl.TimeLog()
 
+    with jrnl.stopwatch('ingest_records', time_log):
+        with topic.get_producer(serializer=default_json_serializer) as producer:
+            for i in range(msg_count):
+                header = hfactory.create(pipeline_name='test',
+                                        timestamp=datetime.datetime.now().isoformat(),
+                                        record_type='test_record')
+                record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
+                producer.produce(record)
+
+    
     print('%d messages sent to Kafka topic %s.' % (msg_count, topic_name))
-
+    print(time_log.readout)
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
