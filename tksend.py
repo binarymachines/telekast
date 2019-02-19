@@ -16,7 +16,7 @@ from pykafka import KafkaClient
 
 
 def default_json_serializer(message, partition_key):
-    return (json.dumps(message), partition_key)
+    return (json.dumps(message).encode(), partition_key)
 
 
 def main(args):
