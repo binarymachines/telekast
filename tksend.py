@@ -44,11 +44,13 @@ def main(args):
     kclient = KafkaClient(hosts=connect_string)
     print(kclient.topics)
 
-    target_topic = args['<topic>']
-    topic = kclient.topics.get(target_topic)
-    if not topic:
+    topic_name = args['<topic>']
+    
+    if not topic_name in kclient.topics.keys():
         print('No topic "%s" listed.' % topic)
         return
+
+    topic = kclient.topics[topic_name]
 
     msg_count = 100
     with topic.get_sync_producer(serializer=default_json_serializer) as producer:
