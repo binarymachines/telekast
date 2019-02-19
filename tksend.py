@@ -42,11 +42,12 @@ def main(args):
     hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'timestamp', 'record_type')
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
 
-    msg_count = 10000
+    msg_count = 100000
     time_log = jrnl.TimeLog()
 
     with jrnl.stopwatch('ingest_records', time_log):
-        with topic.get_producer(serializer=default_json_serializer) as producer:
+        with topic.get_producer(use_rdkafka=True,
+                                serializer=default_json_serializer) as producer:
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
                                         timestamp=datetime.datetime.now().isoformat(),
@@ -54,9 +55,9 @@ def main(args):
                 record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
                 producer.produce(record)
 
-    
     print('%d messages sent to Kafka topic %s.' % (msg_count, topic_name))
     print(time_log.readout)
+
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
