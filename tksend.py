@@ -42,7 +42,7 @@ def main(args):
 
     connect_string = ','.join([str(n) for n in nodes])    
     kclient = KafkaClient(hosts=connect_string)
-    print(common.jsonpretty(kclient.topics))
+    print(kclient.topics)
 
     target_topic = args['<topic>']
     topic = kclient.topics.get(target_topic)
