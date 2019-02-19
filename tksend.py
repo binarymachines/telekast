@@ -42,7 +42,7 @@ def main(args):
     hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'timestamp', 'record_type')
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
 
-    msg_count = 100
+    msg_count = 10000
     time_log = jrnl.TimeLog()
 
     with jrnl.stopwatch('ingest_records', time_log):
