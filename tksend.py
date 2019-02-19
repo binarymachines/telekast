@@ -46,11 +46,13 @@ def main(args):
 
     topic_name = args['<topic>'].encode()
     
-    topic = kclient.topics.get(topic_name)
-    if not topic:
+    
+    if not topic_name in kclient.topics.keys():
         print('No topic "%s" listed.' % topic_name)
         return
 
+    topic = kclient.topics[topic_name]
+    
     msg_count = 100
     with topic.get_sync_producer(serializer=default_json_serializer) as producer:
         for i in range(msg_count):
