@@ -7,6 +7,7 @@ Usage:
 '''
 
 import os, sys
+import json
 import datetime
 from snap import common
 import docopt
@@ -52,7 +53,7 @@ def main(args):
         return
 
     topic = kclient.topics[topic_name]
-    
+
     msg_count = 100
     with topic.get_sync_producer(serializer=default_json_serializer) as producer:
         for i in range(msg_count):
