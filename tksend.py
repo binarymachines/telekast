@@ -63,7 +63,7 @@ def main(args):
             record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
             producer.produce(record)
 
-    print('%d messages sent to Kafka topic %s.' % (msg_count, target_topic))
+    print('%d messages sent to Kafka topic %s.' % (msg_count, topic_name))
 
 
 if __name__ == '__main__':
