@@ -12,8 +12,10 @@ from snap import common
 import docopt
 from telekast import core as tkcore
 from pykafka import KafkaClient
-#>>> client = KafkaClient(hosts="127.0.0.1:9092,127.0.0.1:9093,...")
 
+
+def default_json_serializer(message, partition_key):
+    return (json.dumps(message), partition_key)
 
 
 def main(args):
@@ -38,13 +40,25 @@ def main(args):
         tkcore.KafkaNode('10.142.0.88')
     ]
 
-    connect_string = ','.join([str(n) for n in nodes])
-    print(connect_string)
+    connect_string = ','.join([str(n) for n in nodes])    
     kclient = KafkaClient(hosts=connect_string)
-    print(kclient.topics)
+    print(common.jsonpretty(kclient.topics))
+
+    target_topic = args['<topic>']
+    topic = kclient.topics.get(target_topic)
+    if not topic:
+        print('No topic "%s" listed.' % topic)
+        return
+
+    with topic.get_sync_producer(serializer=default_json_serializer) as producer:
+        for i in range(100):
+            header = hfactory.create(pipeline_name='test',
+                                     timestamp=datetime.datetime.now().isoformat(),
+                                     record_type='test_record')
+            record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
+            producer.produce(record)
 
 
-    #kcluster = tkcore.KafkaCluster()
     
 
 if __name__ == '__main__':
