@@ -7,6 +7,7 @@ Usage:
 '''
 
 import os, sys
+import uuid
 import json
 import pickle
 import datetime
@@ -59,12 +60,13 @@ def main(args):
                             min_queued_messages=250000,
                             max_queued_messages=500000,
                             linger_ms=5) as producer:
+        
+        payload = uuid.uuid4()
         with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
                                         record_type='test_record')
-                record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
-                #record = uuid.uuid4()
+                record = rfactory.create(header, **{'message': payload, 'tag': i})                
                 producer.produce(record)
                 if not i % 100000:
                     print('%d messages sent.' % i)
