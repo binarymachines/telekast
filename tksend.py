@@ -9,6 +9,7 @@ Usage:
 import os, sys
 import json
 import datetime
+from snap import snap
 from snap import common
 from mercury import journaling as jrnl
 import docopt
@@ -21,7 +22,10 @@ def default_json_serializer(message, partition_key):
 
 
 def main(args):
-    print(common.jsonpretty(args))
+    configfile = args['<config_file>']
+    yaml_config = common.read_config_file(configfile)
+    services = common.ServiceObjectRegistry(snap.initialize_services(yaml_config))    
+
     nodes = [
         tkcore.KafkaNode('10.142.0.86'),
         tkcore.KafkaNode('10.142.0.87'),
@@ -45,9 +49,10 @@ def main(args):
     msg_count = 1000000
     time_log = jrnl.TimeLog()
 
-    
     with topic.get_producer(use_rdkafka=True,
-                            serializer=default_json_serializer) as producer:
+                            serializer=default_json_serializer,
+                            min_queued_messages=100000,
+                            linger_ms=500) as producer:
         with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
