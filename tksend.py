@@ -48,7 +48,7 @@ def main(args):
 
     topic = kclient.topics[topic_name]
 
-    hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'timestamp', 'record_type')
+    hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
 
     msg_count = 1000000
@@ -62,7 +62,6 @@ def main(args):
         with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
-                                        timestamp=datetime.datetime.now().isoformat(),
                                         record_type='test_record')
                 record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
                 #record = uuid.uuid4()
