@@ -8,6 +8,7 @@ Usage:
 
 import os, sys
 import json
+import pickle
 import datetime
 from snap import snap
 from snap import common
@@ -19,6 +20,10 @@ from pykafka import KafkaClient
 
 def default_json_serializer(message, partition_key):
     return (json.dumps(message).encode(), partition_key)
+
+
+def default_dict_serializer(message, partition_key):
+    return (pickle.dumps(message).encode(), partition_key)
 
 
 def main(args):
@@ -50,7 +55,7 @@ def main(args):
     time_log = jrnl.TimeLog()
 
     with topic.get_producer(use_rdkafka=True,
-                            serializer=default_json_serializer,
+                            serializer=default_dict_serializer,
                             min_queued_messages=200000,
                             max_queued_messages=300000,
                             linger_ms=500) as producer:
@@ -60,6 +65,7 @@ def main(args):
                                         timestamp=datetime.datetime.now().isoformat(),
                                         record_type='test_record')
                 record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
+                #record = uuid.uuid4()
                 producer.produce(record)
                 if not i % 100000:
                     print('%d messages sent.' % i)
