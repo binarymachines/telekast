@@ -23,7 +23,7 @@ def default_json_serializer(message, partition_key):
 
 
 def default_dict_serializer(message, partition_key):
-    return (pickle.dumps(message).encode(), partition_key)
+    return (pickle.dumps(message), partition_key)
 
 
 def main(args):
