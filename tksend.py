@@ -56,9 +56,9 @@ def main(args):
 
     with topic.get_producer(use_rdkafka=True,
                             serializer=default_dict_serializer,
-                            min_queued_messages=200000,
-                            max_queued_messages=300000,
-                            linger_ms=500) as producer:
+                            min_queued_messages=250000,
+                            max_queued_messages=500000,
+                            linger_ms=5) as producer:
         with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
                 header = hfactory.create(pipeline_name='test',
