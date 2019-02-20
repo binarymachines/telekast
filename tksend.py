@@ -51,8 +51,8 @@ def main(args):
 
     with topic.get_producer(use_rdkafka=True,
                             serializer=default_json_serializer,
-                            min_queued_messages=100000,
-                            max_queued_messages=200000,
+                            min_queued_messages=200000,
+                            max_queued_messages=300000,
                             linger_ms=500) as producer:
         with jrnl.stopwatch('ingest_records', time_log):
             for i in range(msg_count):
@@ -61,6 +61,8 @@ def main(args):
                                         record_type='test_record')
                 record = rfactory.create(header, **{'message': 'telekast test message', 'tag': i})
                 producer.produce(record)
+                if not i % 100000:
+                    print('%d messages sent.' % i)
 
     print('%d messages sent to Kafka topic %s.' % (msg_count, topic_name))
     print(time_log.readout)
