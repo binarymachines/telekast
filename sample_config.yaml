@@ -1,6 +1,7 @@
 
 globals:
   logfile: empty.log
+  service_module: tkservices
 
 service_objects:
   telekast:
