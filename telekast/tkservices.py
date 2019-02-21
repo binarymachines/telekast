@@ -18,15 +18,12 @@ class TelekastService(object):
         
         connect_string = ','.join([str(n) for n in nodes])    
         self.kafka_client = KafkaClient(hosts=connect_string)
-        
-
-        
-
-    hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
-    rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
+    
+        #hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
+        #rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
 
     def get_topic(self, topic_name):
         topic_id = topic_name.encode()
-        if not topic_id in kclient.topics.keys():
+        if not topic_id in self.kafka_client.topics.keys():
             raise Exception('No topic "%s" available.' % topic_name)    
         return self.kafka_client.topics[topic_id]
