@@ -16,9 +16,6 @@ service_objects:
           - 10.142.0.87
           - 10.142.0.88
 
-      - name: 
-
-
 pipelines:
   test:
     record_format: json
