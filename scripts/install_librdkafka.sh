@@ -10,7 +10,8 @@ fi
 
 PKG_MGR=$2
 
-sudo $PKG_MGR install -y zlib &&
+sudo $PKG_MGR install -y build-essential &&
+$PKG_MGR install -y zlib &&
 $PKG_MGR install -y libssl-dev &&
 $PKG_MGR install -y libsasl2-dev
 
@@ -19,3 +20,4 @@ cd librdkafka
 ./configure
 make
 sudo make install
+

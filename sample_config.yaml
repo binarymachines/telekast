@@ -2,8 +2,21 @@
 globals:
   logfile:
 
+tkcore.KafkaNode('10.142.0.86'),
+        tkcore.KafkaNode('10.142.0.87'),
+        tkcore.KafkaNode('10.142.0.88')
 
 service_objects:
+  telekast:
+    class: TelekastService
+    init_params:
+      - name: kafka_nodes
+        value:
+          - 10.142.0.86
+          - 10.142.0.87
+          - 10.142.0.88
+
+      - name: 
 
 
 pipelines:
@@ -15,4 +28,3 @@ pipelines:
       - pipeline_name
       - record_type
     record_payload_field: data
-    

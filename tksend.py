@@ -30,8 +30,9 @@ def default_dict_serializer(message, partition_key):
 def main(args):
     configfile = args['<config_file>']
     yaml_config = common.read_config_file(configfile)
-    services = common.ServiceObjectRegistry(snap.initialize_services(yaml_config))    
+    services = common.ServiceObjectRegistry(snap.initialize_services(yaml_config))
 
+    '''
     nodes = [
         tkcore.KafkaNode('10.142.0.86'),
         tkcore.KafkaNode('10.142.0.87'),
@@ -41,13 +42,11 @@ def main(args):
     connect_string = ','.join([str(n) for n in nodes])    
     kclient = KafkaClient(hosts=connect_string)
     print(kclient.topics)
-
-    topic_name = args['<topic>'].encode()
-    if not topic_name in kclient.topics.keys():
-        print('No topic "%s" listed.' % topic_name)
-        return
-
-    topic = kclient.topics[topic_name]
+    '''
+    
+    topic_name = args['<topic>']
+    tkservice = services.lookup('telekast')
+    topic = tkservice.get_topic(topic_name)
 
     hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
