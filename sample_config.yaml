@@ -1,10 +1,6 @@
 
 globals:
-  logfile:
-
-tkcore.KafkaNode('10.142.0.86'),
-        tkcore.KafkaNode('10.142.0.87'),
-        tkcore.KafkaNode('10.142.0.88')
+  logfile: empty.log
 
 service_objects:
   telekast:
