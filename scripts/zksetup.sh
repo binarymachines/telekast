@@ -11,7 +11,9 @@ fi
 PKG_MGR=$2
 
 sudo $PKG_MGR update
-sudo $PKG_MGR install java-1.8.0-openjdk
+sudo $PKG_MGR install -y git
+sudo $PKG_MGR install -y telnet
+sudo $PKG_MGR install -y java-1.8.0-openjdk
 mkdir installs
 cd installs/
 wget https://www-us.apache.org/dist/zookeeper/stable/zookeeper-3.4.12.tar.gz
