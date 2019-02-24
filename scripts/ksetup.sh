@@ -16,7 +16,9 @@ mkdir -p ~/Downloads
 sudo mkdir -p /opt/kafka 
 sudo useradd kafka -d /opt/kafka
 sudo adduser kafka sudo
+sudo mkdir /var/log/kafka
+sudo chown kafka:kafka /var/log/kafka
 cd /opt/kafka
-curl "http://apache.mirrors.lucidnetworks.net/kafka/2.1.0/kafka_2.12-2.1.0.tgz" -o ~/Downloads/kafka.tgz
+wget http://apache.mirrors.lucidnetworks.net/kafka/2.1.0/kafka_2.12-2.1.0.tgz -O ~/Downloads/kafka.tgz
 sudo tar -xvzf ~/Downloads/kafka.tgz --strip 1
 sudo chown -R kafka:kafka /opt/kafka
