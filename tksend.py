@@ -32,24 +32,16 @@ def main(args):
     yaml_config = common.read_config_file(configfile)
     services = common.ServiceObjectRegistry(snap.initialize_services(yaml_config))
 
-    '''
-    nodes = [
-        tkcore.KafkaNode('10.142.0.86'),
-        tkcore.KafkaNode('10.142.0.87'),
-        tkcore.KafkaNode('10.142.0.88')
-    ]
-
-    connect_string = ','.join([str(n) for n in nodes])    
-    kclient = KafkaClient(hosts=connect_string)
-    print(kclient.topics)
-    '''
-    
     topic_name = args['<topic>']
     tkservice = services.lookup('telekast')
     topic = tkservice.get_topic(topic_name)
 
     hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
     rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')
+
+    header = hfactory.create(pipeline_name='cdm_test', record_type='cdm')
+    record = rfactory.create(header, {'message': 'test'})
+
 
     msg_count = 1000000
     time_log = jrnl.TimeLog()
