@@ -3,6 +3,7 @@
 
 sudo apt-get install -y gpg
 sudo apt-get install -y dirmngr
+sudo apt-get install -y software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886
 sudo apt update
