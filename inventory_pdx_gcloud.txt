@@ -1,0 +1,39 @@
+---
+[pdx-gc-kafka-cluster:children]
+kafka-servers
+zookeeper-servers
+coordinator
+
+[pdx-gc-kafka-cluster:vars]
+pkg_manager=apt
+
+[kafka-servers]
+k1 ansible_host=10.142.0.86 ansible_port=22 ansible_user=dtaylor broker_id=0
+k2 ansible_host=10.142.0.87 ansible_port=22 ansible_user=dtaylor broker_id=1
+k3 ansible_host=10.142.0.88 ansible_port=22 ansible_user=dtaylor broker_id=2
+
+
+[kafka-servers:vars]
+foo=bar
+
+[zookeeper-servers:children]
+zk1
+zk2
+zk3
+
+[zk1]
+ansible_host=10.142.0.82 ansible_port=22 ansible_user=dtaylor
+
+[zk2]
+ansible_host=10.142.0.83 ansible_port=22 ansible_user=dtaylor
+
+[zk3]
+ansible_host=10.142.0.84 ansible_port=22 ansible_user=dtaylor
+
+[zookeeper-servers:vars]
+zookeeper_log_dir=/var/log/zookeeper
+zookeeper_data_dir=/var/lib/zookeeper
+
+[coordinator]
+coord ansible_host=10.142.0.84 ansible_port=22 ansible_user=dtaylor
+

@@ -1,0 +1,53 @@
+---
+[pdx-aws-kafka-cluster:children]
+kafka-servers
+zookeeper-servers
+coordinator
+
+[pdx-aws-kafka-cluster:vars]
+pkg_manager=yum
+
+[kafka-servers:children]
+k1
+k2
+k3
+
+[k1]
+ansible_host=10.164.0.81 ansible_port=22 ansible_user=ec2-user
+
+[k2]
+ansible_host=10.164.0.107 ansible_port=22 ansible_user=ec2-user
+
+[k3]
+ansible_host=10.164.0.31 ansible_port=22 ansible_user=ec2-user
+
+[k1:vars]
+broker_id=0
+
+[k2:vars]
+broker_id=1
+
+[k3:vars]
+broker_id=2
+
+[zookeeper-servers:children]
+zk1
+zk2
+zk3
+
+[zk1]
+ansible_host=10.164.0.141 ansible_port=22 ansible_user=ec2-user
+
+[zk2]
+ansible_host=10.164.0.61 ansible_port=22 ansible_user=ec2-user
+
+[zk3]
+ansible_host=10.164.0.143 ansible_port=22 ansible_user=ec2-user
+
+[zookeeper-servers:vars]
+zookeeper_log_dir=/var/log/zookeeper
+zookeeper_data_dir=/var/lib/zookeeper
+
+[coordinator]
+coord ansible_host=10.164.0.173 ansible_port=22 ansible_user=ec2-user
+
