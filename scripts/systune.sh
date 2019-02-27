@@ -17,3 +17,6 @@ echo 'net.ipv4.tcp_rmem = 4096 12582912 16777216' >> /etc/sysctl.conf
 echo 'vm.swappiness = 1' >> /etc/sysctl.conf
 echo 'vm.dirty_ratio = 90' >> /etc/sysctl.conf
 echo 'vm.dirty_background_ratio = 80' >> /etc/sysctl.conf
+
+# apply changes
+sysctl -p
