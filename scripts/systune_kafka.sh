@@ -12,11 +12,11 @@ echo 'net.core.somaxconn=1000' >> /etc/sysctl.conf
 echo 'net.core.netdev_max_backlog=5000' >> /etc/sysctl.conf
 echo 'net.ipv4.tcp_wmem=8192 12582912 16777216' >> /etc/sysctl.conf
 echo 'net.ipv4.tcp_rmem=8192 12582912 16777216' >> /etc/sysctl.conf
-echo 'net.core.netdev_max_backlog=30000' >> /etc/sysctl.conf
+echo 'net.core.netdev_max_backlog=1000' >> /etc/sysctl.conf
 echo 'net.ipv4.tcp_max_syn_backlog=4096' >> /etc/sysctl.conf
 
 # virtual memory
-echo 'vm.swappiness = 1' >> /etc/sysctl.conf
+echo 'vm.swappiness = 10' >> /etc/sysctl.conf
 echo 'vm.dirty_ratio = 90' >> /etc/sysctl.conf
 echo 'vm.dirty_background_ratio = 80' >> /etc/sysctl.conf
 

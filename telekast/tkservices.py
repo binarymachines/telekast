@@ -16,8 +16,8 @@ class TelekastService(object):
         node_strings = kwreader.get_value('kafka_nodes')
         nodes = [tkcore.KafkaNode(ns) for ns in node_strings]
         
-        connect_string = ','.join([str(n) for n in nodes])    
-        self.kafka_client = KafkaClient(hosts=connect_string)
+        self.connect_string = ','.join([str(n) for n in nodes])    
+        self.kafka_client = KafkaClient(hosts=self.connect_string)
     
         #hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
         #rfactory = tkcore.PipelineRecordFactory(payload_field_name='data')

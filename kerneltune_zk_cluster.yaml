@@ -1,0 +1,5 @@
+- hosts: zookeeper-servers
+  become: true
+  become_user: root
+  tasks:
+    - script: scripts/systune_zookeeper.sh

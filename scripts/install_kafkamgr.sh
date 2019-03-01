@@ -3,6 +3,7 @@
 #wget https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm
 #sudo yum localinstall -y scala-2.12.2.rpm
 
+sudo apt-get install -y zip
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common
 sudo apt-get install -y dirmngr --install-recommends
