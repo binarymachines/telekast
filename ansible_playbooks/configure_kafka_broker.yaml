@@ -1,7 +1,7 @@
 - hosts: k7
   become: true
   vars_files:
-    - vars/kafka-servers.yml
+    - vars/kafka-servers.yaml
 
   tasks:
     - name: Install Oracle Java8
@@ -56,15 +56,24 @@
       become_user: kafka
       script: scripts/kcopy.sh      
         
-        
-        
-
     - name: Test templating            
       debug: 
         msg: "{{ brokers[inventory_hostname] }}"
       
     - name: Populate config template
-      become_user: dtaylor
+      become_user: kafka
       template:
         src: template_files/server.properties.j2
-        dest: ~/server.properties
+        dest: "{{ brokers[inventory_hostname].kafka_home }}/config/server.properties"
+
+    - name: Populate systemctl template
+      become_user: root
+      template:
+        src: template_files/kafka.service.j2
+        dest: /etc/systemd/system/kafka.service
+
+    - name: Start kafka
+      service:
+        name: kafka
+        state: started
+        enabled: yes

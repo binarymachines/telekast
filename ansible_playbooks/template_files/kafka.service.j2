@@ -1,0 +1,15 @@
+[Unit]
+Description=Apache Kafka server (broker)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User=kafka
+ExecStart=/bin/sh -c 'export KAFKA_HEAP_OPTS="-Xmx{{ brokers[inventory_hostname].heapsize_gb }}G -Xms{{ brokers[inventory_hostname].heapsize_gb }}G" && {{ brokers[inventory_hostname].kafka_home }}/bin/kafka-server-start.sh {{ brokers[inventory_hostname].kafka_home }}/config/server.properties > {{ brokers[inventory_hostname].kafka_home }}/kafka.log 2>&1'
+ExecStop={{ brokers[inventory_hostname].kafka_home }}/bin/kafka-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target

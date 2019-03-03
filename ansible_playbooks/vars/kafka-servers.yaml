@@ -1,5 +1,7 @@
 brokers:
   k1:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 0
     internal_ip: 10.142.0.86
     num_net_threads: 6
@@ -11,6 +13,8 @@ brokers:
     zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
     
   k2:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 1
     internal_ip: 10.142.0.87
     num_net_threads: 6
@@ -22,6 +26,8 @@ brokers:
     zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
 
   k3:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 2
     internal_ip: 10.142.0.88
     num_net_threads: 6
@@ -34,6 +40,8 @@ brokers:
 
 
   k4:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 3
     internal_ip: 10.142.0.93
     num_net_threads: 6
@@ -45,6 +53,8 @@ brokers:
     zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
 
   k5:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 4
     internal_ip: 10.142.0.94
     num_net_threads: 6
@@ -56,6 +66,8 @@ brokers:
     zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
 
   k6:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 5
     internal_ip: 10.142.0.95
     num_net_threads: 6
@@ -67,6 +79,8 @@ brokers:
     zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
   
   k7:
+    kafka_home: /opt/kafka
+    heapsize_gb: 8
     broker_id: 6
     internal_ip: 10.142.0.96
     num_net_threads: 6

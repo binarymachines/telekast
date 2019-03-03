@@ -42,7 +42,6 @@ def main(args):
     header = hfactory.create(pipeline_name='cdm_test', record_type='cdm')
     record = rfactory.create(header, {'message': 'test'})
 
-
     msg_count = 1000000
     time_log = jrnl.TimeLog()
 
