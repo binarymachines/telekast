@@ -1,0 +1,79 @@
+brokers:
+  k1:
+    broker_id: 0
+    internal_ip: 10.142.0.86
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+    
+  k2:
+    broker_id: 1
+    internal_ip: 10.142.0.87
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+
+  k3:
+    broker_id: 2
+    internal_ip: 10.142.0.88
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+
+
+  k4:
+    broker_id: 3
+    internal_ip: 10.142.0.93
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+
+  k5:
+    broker_id: 4
+    internal_ip: 10.142.0.94
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+
+  k6:
+    broker_id: 5
+    internal_ip: 10.142.0.95
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+  
+  k7:
+    broker_id: 6
+    internal_ip: 10.142.0.96
+    num_net_threads: 6
+    num_io_threads: 3
+    socket_send_bufsize_bytes: -1
+    socket_rcv_bufsize_bytes: -1
+    log_dirs: /var/log/kafka
+    num_partitions: 6
+    zookeeper_connect_string: 10.142.0.82:2181,10.142.0.83:2181,10.142.0.84:2181
+    

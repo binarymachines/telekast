@@ -1,0 +1,70 @@
+- hosts: k7
+  become: true
+  vars_files:
+    - vars/kafka-servers.yml
+
+  tasks:
+    - name: Install Oracle Java8
+      become_user: root
+      script: scripts/oracle_java8_install.sh
+      
+    - name: Create the kafka group
+      become_user: root
+      group:
+        name: kafka
+
+    - name: Create the kafka user      
+      become_user: root
+      user:
+        name: kafka        
+        shell: /bin/bash
+        system: no
+        group: kafka
+        state: present
+
+    - name: Create Kafka home dir
+      become_user: root
+      file:
+        path: /opt/kafka
+        state: directory
+        owner: kafka
+        group: kafka
+
+    - name: Create Kafka log dir
+      become_user: root
+      file:
+        path: /var/log/kafka
+        state: directory
+        owner: kafka
+        group: kafka
+
+
+    - name: Download Kafka distribution
+      become_user: kafka
+      get_url:
+        url: http://apache.mirrors.lucidnetworks.net/kafka/2.1.0/kafka_2.12-2.1.0.tgz
+        dest: /tmp/kafka.tgz
+
+    - name: Unpack Kafka into temp dir
+      become_user: kafka
+      unarchive:        
+        src: /tmp/kafka.tgz
+        dest: /tmp
+        copy: no        
+
+    - name: Copy Kafka files into target dir
+      become_user: kafka
+      script: scripts/kcopy.sh      
+        
+        
+        
+
+    - name: Test templating            
+      debug: 
+        msg: "{{ brokers[inventory_hostname] }}"
+      
+    - name: Populate config template
+      become_user: dtaylor
+      template:
+        src: template_files/server.properties.j2
+        dest: ~/server.properties

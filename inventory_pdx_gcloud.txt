@@ -8,31 +8,28 @@ coordinator
 pkg_manager=apt
 
 [kafka-servers]
-k1 ansible_host=10.142.0.86 ansible_port=22 ansible_user=dtaylor broker_id=0
-k2 ansible_host=10.142.0.87 ansible_port=22 ansible_user=dtaylor broker_id=1
-k3 ansible_host=10.142.0.88 ansible_port=22 ansible_user=dtaylor broker_id=2
-
+k1 ansible_host=34.73.196.179 ansible_port=22 ansible_user=dtaylor
+k2 ansible_host=35.237.138.138 ansible_port=22 ansible_user=dtaylor
+k3 ansible_host=35.196.189.236 ansible_port=22 ansible_user=dtaylor
+k4 ansible_host=35.237.218.82 ansible_port=22 ansible_user=dtaylor 
+k5 ansible_host=104.196.67.41 ansible_port=22 ansible_user=dtaylor
+k6 ansible_host=34.73.209.13 ansible_port=22 ansible_user=dtaylor
+k7 ansible_host=35.237.190.165 ansible_port=22 ansible_user=dtaylor
 
 [kafka-servers:vars]
-foo=bar
+ansible_ssh_private_key_file=~/.ssh/google_compute_engine
 
-[zookeeper-servers:children]
-zk1
-zk2
-zk3
 
-[zk1]
-ansible_host=10.142.0.82 ansible_port=22 ansible_user=dtaylor
-
-[zk2]
-ansible_host=10.142.0.83 ansible_port=22 ansible_user=dtaylor
-
-[zk3]
-ansible_host=10.142.0.84 ansible_port=22 ansible_user=dtaylor
+[zookeeper-servers]
+zk1 ansible_host=34.73.217.168 ansible_port=22 ansible_user=dtaylor
+zk2 ansible_host=34.73.24.206 ansible_port=22 ansible_user=dtaylor
+zk3 ansible_host=35.227.32.233 ansible_port=22 ansible_user=dtaylor
 
 [zookeeper-servers:vars]
+ansible_ssh_private_key_file=~/.ssh/google_compute_engine
 zookeeper_log_dir=/var/log/zookeeper
 zookeeper_data_dir=/var/lib/zookeeper
+
 
 [coordinator]
 coord ansible_host=10.142.0.84 ansible_port=22 ansible_user=dtaylor

@@ -1,0 +1,27 @@
+- hosts: k7
+  become: true
+  vars_files:
+    - ansible_vars/kafka-servers.yml
+
+  tasks:
+    - name: Add an apt key by id from a keyserver
+      become_user: root
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: C2518248EEA14886
+
+    - name: Add Oracle Java Repository
+      become: yes
+      apt_repository: repo='deb:webupd8team/java'
+
+    - name: Accept Java 8 License
+      become: yes
+      debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+    - name: Install Oracle Java 8
+      become: yes
+      apt: name={{item}} state=latest
+      with_items:
+        - oracle-java8-installer
+        - ca-certificates
+        - oracle-java8-set-default
