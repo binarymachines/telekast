@@ -4,7 +4,6 @@
 Usage:
     tkrcv --config <config_file> --topic <topic> [--datafile <file>]
 
-
 '''
 
 import os, sys
