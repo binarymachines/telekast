@@ -5,6 +5,7 @@ from snap import snap
 from snap import common
 from telekast import core as tkcore
 from pykafka import KafkaClient
+from confluent_kafka import Producer
 
 
 INIT_PARAMS = ['nodes']
@@ -14,9 +15,8 @@ class TelekastService(object):
         kwreader = common.KeywordArgReader('kafka_nodes')
         kwreader.read(**kwargs)        
         node_strings = kwreader.get_value('kafka_nodes')
-        nodes = [tkcore.KafkaNode(ns) for ns in node_strings]
+        self.nodes = [tkcore.KafkaNode(ns) for ns in node_strings]
         
-        self.connect_string = ','.join([str(n) for n in nodes])    
         self.kafka_client = KafkaClient(hosts=self.connect_string)
     
         #hfactory = tkcore.PipelineRecordHeaderFactory('pipeline_name', 'record_type')
@@ -27,3 +27,7 @@ class TelekastService(object):
         if not topic_id in self.kafka_client.topics.keys():
             raise Exception('No topic "%s" available.' % topic_name)    
         return self.kafka_client.topics[topic_id]
+
+    @property
+    def connect_string(self):
+        return ','.join([str(n) for n in self.nodes])    

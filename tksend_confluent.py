@@ -50,17 +50,9 @@ def main(args):
     msg_count = 2000000
     time_log = jrnl.TimeLog()
 
-    nodes = [
-        tkcore.KafkaNode('10.142.0.86'),
-        tkcore.KafkaNode('10.142.0.87'),
-        tkcore.KafkaNode('10.142.0.88')
-    ]
-
-    connect_string = ','.join([str(n) for n in nodes] )
-
     prod_config = {
                 "on_delivery": delivery_report,
-                "bootstrap.servers": connect_string,
+                "bootstrap.servers": tkservice.connect_string,
                 "group.id": "python_injector",
                 "retry.backoff.ms": 3000,
                 "retries": 5,
